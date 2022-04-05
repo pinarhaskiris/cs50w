@@ -1,0 +1,9 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Your bid has to be greater than the current price.</h2>
+
+    <a href="{% url 'goToItem' itemTitle %}">Go back to the listing</a>
+
+{% endblock %}

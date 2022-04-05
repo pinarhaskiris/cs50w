@@ -1,0 +1,9 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Creator of this listing has closed the item for more bids. Auction for this listing is over.</h2>
+
+    <a href="{% url 'goToItem' itemTitle %}">Go back to the listing</a>
+
+{% endblock %}

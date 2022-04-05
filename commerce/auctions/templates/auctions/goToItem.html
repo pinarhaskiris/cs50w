@@ -1,0 +1,65 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Listing: {{ itemTitle }}</h2>
+    <div>
+        {{ itemDes }}
+    </div>
+    <img src= "{{ itemImg }}" >
+
+    <h2>
+        ${{ itemPrice }}
+    </h2>
+
+    <h2>Comments</h2>
+    {% for comment in itemComments%}
+        <div><span>{{ comment.commenter }}: </span> {{ comment }}</div>
+    {% endfor %}
+
+    {% if itemCategory != 'no category' %}
+        <div>Category: {{ itemCategory }}</div>
+    {% endif %}
+
+
+    {% if user.is_authenticated %}
+
+        {% if not itemWatch %}
+    	   <a href="{% url 'addToWatchlist' itemTitle %}">Add to Watchlist</a>
+        {% else %}
+    	   <a href="{% url 'removeFromWatchlist' itemTitle %}">Remove from Watchlist</a>
+        {% endif %}
+
+        <form action="{% url 'bid' itemTitle %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
+
+        <form action="{% url 'comment' itemTitle %}" method="POST">
+            {% csrf_token %}
+            {{ commentForm }}
+            <input type="submit">
+        </form>
+
+
+        {% if request.user.username == itemCreator %}
+            {% if isItemOpen %}
+                <a href="{% url 'closeListing' itemTitle %}">Close listing for bids</a>
+            {% endif %}
+        {% endif %}
+
+        {% if not isItemOpen %}
+            <h4>This listing is closed for bids.</h4>
+
+            {% if request.user.username == highestBidder %}
+                <h5>You have won the auction.</h5>
+            {% else %}
+                <h5>{{ highestBidder }} has won the auction.</h5>
+            {% endif %}
+
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}

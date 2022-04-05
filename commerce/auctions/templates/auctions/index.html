@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+    <div class="container">
+    	{% for listing in activeListings %}
+    	<div class="index">
+    		<a href="{% url 'goToItem' listing.title %}">
+    			<div> {{ listing.title }} </div>
+                <div>{{ listing.description }} </div>
+    			<div>{{ listing.price}}$</div>
+
+    			{% if listing.imgUrl %}
+    				<div><img src="{{ listing.imgUrl }}"></div>
+    			{% else %}
+    				<div><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"></div>
+    			{% endif %}
+    		</a>
+    	</div>
+    	{% endfor %}	
+    </div>
+{% endblock %}

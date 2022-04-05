@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+
+    <div class="container">
+        {% if not watchlist %}
+        <h4>There is nothing in your watchlist.</h4>
+        {% else %}
+
+    	   {% for listing in watchlist %}
+    	   <div class="index">
+    		  <a href="{% url 'goToItem' listing.title %}">
+    			     <div> {{ listing }} </div>
+    			     <div>Price: {{ listing.price}}</div>
+    			     <div>Description: {{ listing.description }} </div>
+
+    			     {% if listing.imgUrl %}
+    				    <div><img src="{{ listing.imgUrl }}"></div>
+    			     {% else %}
+    				    <div><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"></div>
+    			     {% endif %}
+    		  </a>
+    	   </div>
+    	   {% endfor %}	
+
+        {% endif %}
+    </div>
+{% endblock %}
